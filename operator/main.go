@@ -18,11 +18,8 @@ package main
 
 import (
 	"flag"
-	"os"
-	"sigs.k8s.io/controller-runtime/pkg/cache"
-	"time"
-
 	dummycd "github.com/yimgzz/dummy-cd/server/pkg/server"
+	"os"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
@@ -57,7 +54,6 @@ func main() {
 	var enableLeaderElection bool
 	var probeAddr string
 	var dummycdServerAddr string
-	var syncPeriod int
 
 	flag.StringVar(&metricsAddr, "metrics-bind-address", ":8080", "The address the metric endpoint binds to.")
 	flag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
@@ -65,7 +61,6 @@ func main() {
 		"Enable leader election for controller manager. "+
 			"Enabling this will ensure there is only one active controller manager.")
 	flag.StringVar(&dummycdServerAddr, "dummycd-server", "dummycd-server:50031", "The address of dummycd gRPC server")
-	flag.IntVar(&syncPeriod, "sync-period", 1, "The manager cache sync period, minutes")
 
 	opts := zap.Options{
 		Development: true,
@@ -81,8 +76,6 @@ func main() {
 		setupLog.Error(err, "unable to create dummycd server client", "controller", "Server")
 	}
 
-	syncPeriodDuration := time.Duration(syncPeriod) * time.Minute
-
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:                 scheme,
 		MetricsBindAddress:     metricsAddr,
@@ -90,7 +83,6 @@ func main() {
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
 		LeaderElectionID:       "9229e232.dummy.cd",
-		Cache:                  cache.Options{SyncPeriod: &syncPeriodDuration},
 		// LeaderElectionReleaseOnCancel defines if the leader should step down voluntarily
 		// when the Manager ends. This requires the binary to immediately end when the
 		// Manager is stopped, otherwise, this setting is unsafe. Setting this significantly
