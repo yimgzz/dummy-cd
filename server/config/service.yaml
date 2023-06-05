@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dummycd-server
+  namespace: operator-system
+  labels:
+    app: dummycd-server
+spec:
+  ports:
+    - port: 50031
+      name: tcp
+  clusterIP: None
+  selector:
+    app: dummycd-server

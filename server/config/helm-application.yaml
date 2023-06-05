@@ -1,0 +1,20 @@
+apiVersion: dummy.cd/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/name: application
+    app.kubernetes.io/part-of: dummy.cd
+  name: dummycd-hello-world-helm-app
+  namespace: operator-system
+spec:
+  URL: "https://github.com/yimgzz/dummy-cd.git"
+  namespace: "dummycd-hello-world"
+  reference: "main"
+  sparsePath: "examples/helm-influxdb"
+  helm:
+    checkValuesEqual: true
+    reInstallRelease: false
+    createNamespace: true
+    atomic: true
+    valuesFiles:
+      - my-influxdb-values.yaml

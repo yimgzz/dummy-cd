@@ -1,0 +1,10 @@
+apiVersion: dummy.cd/v1alpha1
+kind: Repository
+metadata:
+  labels:
+    app.kubernetes.io/name: repository
+    app.kubernetes.io/part-of: dummy.cd
+  name: dummycd-hello-world-repo
+  namespace: operator-system
+spec:
+  URL: "https://github.com/yimgzz/dummy-cd.git"

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option go_package = "github.com/yimgzz/dummy-cd/server/pkg/pb";
+
+package pb;
+
+service dummycd {
+  rpc AddRepository (Repository) returns (Empty) {}
+  rpc DeleteRepository (Repository) returns (Empty) {}
+  rpc AddOrUpdateApplication (Application) returns (Empty) {}
+  rpc DeleteApplication (Application) returns (Empty) {}
+  rpc GetApplications (Empty) returns (Applications) {}
+  rpc GetApplicationRevisions (Application) returns (Revisions) {}
+  rpc CheckoutApplicationRevision (Application) returns (Empty) {}
+}
+
+message Repository {
+  string name = 1;
+  string url = 2;
+  string privateKeySecret = 3;
+  bool insecureIgnoreHostKey = 4;
+}
+
+message Applications {
+  repeated Application items = 1;
+}
+
+message Application {
+  string name = 1;
+  string namespace = 2;
+  string url = 3;
+  string reference = 5;
+  string sparsePath = 6;
+  Revision revision = 7;
+  HelmProvider helm = 8;
+}
+
+message Revision {
+  string hash = 1;
+  string message = 2;
+}
+
+message Revisions {
+  repeated Revision items = 1;
+}
+
+message HelmProvider {
+  bool checkValuesEqual = 1;
+  bool reInstallRelease = 2;
+  bool createNamespace = 3;
+  bool atomic = 4;
+  bool includeCRDs = 5;
+  repeated string valuesFiles = 6;
+}
+
+message Empty {}
