@@ -6,7 +6,6 @@ require (
 	github.com/go-git/go-git/v5 v5.7.0
 	github.com/google/go-cmp v0.5.9
 	github.com/sirupsen/logrus v1.9.3
-	github.com/yimgzz/dummy-cd v0.0.0-20230605072903-a2633b0ac52e
 	golang.org/x/crypto v0.9.0
 	golang.org/x/net v0.10.0
 	google.golang.org/grpc v1.55.0
@@ -18,6 +17,7 @@ require (
 	k8s.io/cli-runtime v0.27.2
 	k8s.io/client-go v0.27.2
 	sigs.k8s.io/controller-runtime v0.15.0
+	github.com/yimgzz/dummy-cd v0.0.0-20230605074001-0f0c773779cb
 )
 
 require (
